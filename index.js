@@ -6,16 +6,18 @@ async function main() {
   const gestor = new GestorTareas();
   await gestor.inicializar();
 
-  gestor.crearTarea('Estudiar Node.js', 'Repasar módulos', 'alta');
-  gestor.crearTarea('Jugar fútbol', 'Partido 8 PM', 'media');
+  console.log('📝 Creando tareas...');
+  await gestor.crearTarea('Aprender módulos', 'Práctica avanzada', 'alta');
+  await gestor.crearTarea('Estudiar Node.js', 'Repasar asincronía', 'media');
 
-  await gestor.guardar();
+  console.log('🏁 Completando una tarea...');
+  const tareas = gestor.obtenerTareas();
+  await gestor.completarTarea(tareas[0].id);
 
-  console.log('\n📤 Exportando tareas...');
-  console.log('JSON:', await gestor.exportar('json'));
-  console.log('CSV:', await gestor.exportar('csv'));
+  console.log('📤 Exportando...');
+  await gestor.exportar();
 
-  console.log('\n📊 Estadísticas:', gestor.obtenerEstadisticas());
+  console.log('🎉 Finalizado!');
 }
 
 main().catch(err => console.error('❌ Error:', err.message));
